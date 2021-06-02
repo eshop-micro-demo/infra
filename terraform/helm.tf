@@ -36,6 +36,24 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
   }
 }
 
+# nginx-ingress-controller
+resource "kubernetes_namespace" "ingress-nginx" {
+  metadata {
+    name = "ingress-nginx"
+  }
+}
+
+resource "helm_release" "ingress-nginx" {
+  name       = "ingress-nginx"
+  chart      = "ingress-nginx/ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  version    = "3.32.0"
+  namespace  = kubernetes_namespace.ingress-nginx.metadata.0.name
+
+  # Add more settings
+}
+
+
 # Cert-manager
 resource "kubernetes_namespace" "cert-manager" {
   metadata {
@@ -50,3 +68,4 @@ resource "helm_release" "cert-manager" {
   version    = "1.3.1"
   namespace  = kubernetes_namespace.cert-manager.metadata.0.name
 }
+
