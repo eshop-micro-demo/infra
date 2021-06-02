@@ -1,4 +1,4 @@
-resource "aws_efs_file_system" "eks-volume" {
+resource "aws_efs_file_system" "efs-volume" {
    creation_token = "efs-volumes"
    performance_mode = "generalPurpose"
    throughput_mode = "bursting"
@@ -8,18 +8,18 @@ resource "aws_efs_file_system" "eks-volume" {
    }
 }
 
-resource "aws_efs_mount_target" "eks-volume-targets" {
+resource "aws_efs_mount_target" "efs-volume-targets" {
     for_each      = data.aws_subnet_ids.kops_subnets.ids
-  file_system_id = aws_efs_file_system.eks-volume.id
+  file_system_id = aws_efs_file_system.efs-volume.id
   subnet_id     = each.value
 
   security_groups = [
-    aws_security_group.efs-target-eks-volumes.id
+    aws_security_group.efs-target.id
   ]
 }
 
-resource "aws_security_group" "efs-target-eks-volumes" {
-  name        = "efs-target-eks-volumes"
+resource "aws_security_group" "efs-target" {
+  name        = "efs-target-access"
   description = "Allows NFS traffic from instances within the VPC."
   vpc_id      = data.aws_vpc.kops_vpc.id
 

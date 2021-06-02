@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "storage" {
 
 resource "helm_release" "nfs-subdir-external-provisioner" {
   depends_on = [
-    aws_efs_mount_target.eks-volume-targets
+    aws_efs_mount_target.efs-volume-targets
   ]
   name       = "nfs-subdir-external-provisioner"
   chart      = "nfs-subdir-external-provisioner"
@@ -21,7 +21,7 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
 
   set {
     name  = "nfs.server"
-    value = aws_efs_file_system.eks-volume.dns_name
+    value = aws_efs_file_system.efs-volume.dns_name
   }
 
   set {
