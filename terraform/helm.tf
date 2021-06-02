@@ -3,6 +3,7 @@ provider "helm" {
 provider "kubernetes" {
 }
 
+# EFS nfs-provisioner
 resource "kubernetes_namespace" "storage" {
   metadata {
     name = "storage"
@@ -33,4 +34,19 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
     name  = "storageClass.name"
     value = "efs-client"
   }
+}
+
+# Cert-manager
+resource "kubernetes_namespace" "cert-manager" {
+  metadata {
+    name = "cert-manager"
+  }
+}
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  chart      = "cert-manager"
+  repository = "https://charts.jetstack.io/"
+  version    = "1.3.1"
+  namespace  = kubernetes_namespace.cert-manager.metadata.0.name
 }
