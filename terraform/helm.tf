@@ -69,3 +69,28 @@ resource "helm_release" "cert-manager" {
   namespace  = kubernetes_namespace.cert-manager.metadata.0.name
 }
 
+# External-DNS
+resource "kubernetes_namespace" "external-dns" {
+  metadata {
+    name = "external-dns"
+  }
+}
+
+resource "helm_release" "external-dns" {
+  name       = "external-dns"
+  chart      = "external-dns"
+  repository = "https://charts.bitnami.com/bitnami"
+  version    = "5.0.2"
+  namespace  = kubernetes_namespace.external-dns.metadata.0.name
+
+  set {
+    name  = "dryRun"
+    value = "true"
+  }
+  set {
+    name  = "domainFilters[0]"
+    value = "dh4r4pvj.ga"
+  }
+  
+}
+
