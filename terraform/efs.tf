@@ -1,10 +1,10 @@
 resource "aws_efs_file_system" "eks-volume" {
-   creation_token = "eks-volumes"
+   creation_token = "efs-volumes"
    performance_mode = "generalPurpose"
    throughput_mode = "bursting"
    encrypted = "true"
    tags = {
-     Name = "EKSVolumes"
+     Name = "EFSVolumes"
    }
 }
 
@@ -17,15 +17,6 @@ resource "aws_efs_mount_target" "eks-volume-targets" {
     aws_security_group.efs-target-eks-volumes.id
   ]
 }
-
-# resource "aws_efs_mount_target" "eks-volumes-ca-central-1b" {
-#   file_system_id = aws_efs_file_system.eks-volumes.id
-#   subnet_id      = data.aws_subnet_ids.kops_subnets.0
-
-#   security_groups = [
-#     aws_security_group.efs-target-eks-volumes.id
-#   ]
-# }
 
 resource "aws_security_group" "efs-target-eks-volumes" {
   name        = "efs-target-eks-volumes"
