@@ -16,3 +16,12 @@ data "aws_security_group" "kops_node_secgrp" {
     "Name" = "nodes.kopsdemo.k8s.local"
   }
 }
+
+data "aws_route53_zone" "main-zone" {
+  name         = "dh4r4pvj.ga."
+  private_zone = false
+}
+
+data "aws_iam_role" "kops_nodes_role" {
+  name = "nodes.kopsdemo.k8s.local"
+}

@@ -4,6 +4,16 @@ metadata:
   creationTimestamp: null
   name: kopsdemo.k8s.local
 spec:
+  # Added for kube2iam to allow assume-role operations.
+  additionalPolicies:
+    node: |
+      [
+        {
+          "Effect": "Allow",
+          "Action": ["sts:AssumeRole"],
+          "Resource": ["*"]
+        }
+      ]
   api:
     loadBalancer:
       type: Public
@@ -26,18 +36,27 @@ spec:
       name: a
     memoryRequest: 100Mi
     name: events
-  externalPolicies:
-    node:
-    - arn:aws:iam::064814169464:policy/AllowExternalDNSUpdates
+  # externalPolicies:
+  #   node:
+  #   - arn:aws:iam::064814169464:policy/AllowExternalDNSUpdates
   iam:
     allowContainerRegistry: true
     legacy: false
-  kubelet:
+  kubeDNS:
+    provider: CoreDNS
+    nodeLocalDNS:
+      enabled: true
+      memoryRequest: 5Mi
+      cpuRequest: 25m
+    kubelet:
     anonymousAuth: false
   kubernetesApiAccess:
   - 0.0.0.0/0
   kubernetesVersion: 1.20.7
   masterPublicName: api.kopsdemo.k8s.local
+  metricsServer:
+    enabled: true
+    insecure: true
   networkCIDR: 172.20.0.0/16
   networking:
     calico: {}

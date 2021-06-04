@@ -53,6 +53,25 @@ resource "helm_release" "ingress-nginx" {
   # Add more settings
 }
 
+# kube2iam
+resource "kubernetes_namespace" "kube2iam" {
+  metadata {
+    name = "kube2iam"
+  }
+}
+
+resource "helm_release" "kube2iam" {
+  name       = "kube2iam"
+  chart      = "kube2iam"
+  repository = "https://jtblin.github.io/kube2iam/"
+  version    = "2.6.0"
+  namespace  = kubernetes_namespace.kube2iam.metadata.0.name
+  
+  values = [
+    "${file("helm/values.kube2iam.yaml")}"
+  ]
+}
+
 
 # Cert-manager
 resource "kubernetes_namespace" "cert-manager" {
@@ -83,14 +102,12 @@ resource "helm_release" "external-dns" {
   version    = "5.0.2"
   namespace  = kubernetes_namespace.external-dns.metadata.0.name
 
+  values = [
+    "${file("helm/values.external-dns.yaml")}"
+  ]
   set {
-    name  = "dryRun"
-    value = "true"
+    name  = "podAnnotations.iam\\.amazonaws\\.com/role"
+    value = aws_iam_role.external-dns-role.arn
   }
-  set {
-    name  = "domainFilters[0]"
-    value = "dh4r4pvj.ga"
-  }
-  
 }
 

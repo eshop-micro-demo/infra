@@ -1,0 +1,21 @@
+host:
+  # docker0 is used
+  iptables: true
+  # flannel
+  #interface: cni0
+  # Calico
+  interface: cali+
+rbac:
+  create: true
+
+extraArgs:
+  auto-discover-base-arn: 
+  auto-discover-default-role: true
+
+resources:
+  limits:
+    cpu: 50m
+    memory: 50Mi
+  requests:
+    cpu: 30m
+    memory: 50Mi
