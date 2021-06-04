@@ -1,0 +1,12 @@
+global:
+  storageClass: efs-client
+auth:
+  rootPassword: "checkout"
+  database: checkout
+rbac:
+  create: true
+metrics:
+  enabled: true
+primary:
+  persistence:
+    size: 250M

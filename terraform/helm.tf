@@ -4,12 +4,6 @@ provider "kubernetes" {
 }
 
 # EFS nfs-provisioner
-resource "kubernetes_namespace" "storage" {
-  metadata {
-    name = "storage"
-  }
-}
-
 resource "helm_release" "nfs-subdir-external-provisioner" {
   depends_on = [
     aws_efs_mount_target.efs-volume-targets
@@ -18,7 +12,9 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
   chart      = "nfs-subdir-external-provisioner"
   repository = "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/"
   version    = "4.0.10"
-  namespace  = kubernetes_namespace.storage.metadata.0.name
+  namespace  = "storage"
+  create_namespace = true
+  atomic = true
 
   set {
     name  = "nfs.server"
@@ -37,35 +33,25 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
 }
 
 # nginx-ingress-controller
-resource "kubernetes_namespace" "ingress-nginx" {
-  metadata {
-    name = "ingress-nginx"
-  }
-}
-
 resource "helm_release" "ingress-nginx" {
   name       = "ingress-nginx"
   chart      = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
   version    = "3.31.0"
-  namespace  = kubernetes_namespace.ingress-nginx.metadata.0.name
-
-  # Add more settings
+  namespace  = "ingress-nginx"
+  create_namespace = true
+  atomic = true
 }
 
 # kube2iam
-resource "kubernetes_namespace" "kube2iam" {
-  metadata {
-    name = "kube2iam"
-  }
-}
-
 resource "helm_release" "kube2iam" {
   name       = "kube2iam"
   chart      = "kube2iam"
   repository = "https://jtblin.github.io/kube2iam/"
   version    = "2.6.0"
-  namespace  = kubernetes_namespace.kube2iam.metadata.0.name
+  namespace  = "kube2iam"
+  create_namespace = true
+  atomic = true
   
   values = [
     "${file("helm/values.kube2iam.yaml")}"
@@ -74,33 +60,25 @@ resource "helm_release" "kube2iam" {
 
 
 # Cert-manager
-resource "kubernetes_namespace" "cert-manager" {
-  metadata {
-    name = "cert-manager"
-  }
-}
-
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io/"
   version    = "1.3.1"
-  namespace  = kubernetes_namespace.cert-manager.metadata.0.name
+  namespace  = "cert-manager"
+  create_namespace = true
+  atomic = true
 }
 
 # External-DNS
-resource "kubernetes_namespace" "external-dns" {
-  metadata {
-    name = "external-dns"
-  }
-}
-
 resource "helm_release" "external-dns" {
   name       = "external-dns"
   chart      = "external-dns"
   repository = "https://charts.bitnami.com/bitnami"
   version    = "5.0.2"
-  namespace  = kubernetes_namespace.external-dns.metadata.0.name
+  namespace  = "external-dns"
+  create_namespace = true
+  atomic = true
 
   values = [
     "${file("helm/values.external-dns.yaml")}"
@@ -110,4 +88,3 @@ resource "helm_release" "external-dns" {
     value = aws_iam_role.external-dns-role.arn
   }
 }
-
