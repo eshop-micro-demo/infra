@@ -1,5 +1,8 @@
 # Maria-DB- Checkout microservice
 resource "helm_release" "checkout-db" {
+  depends_on = [
+    helm_release.nfs-subdir-external-provisioner
+  ]
   name       = "checkout-db"
   chart      = "mariadb"
   repository = "https://charts.bitnami.com/bitnami"
