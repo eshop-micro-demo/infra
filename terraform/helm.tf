@@ -1,7 +1,7 @@
 provider "helm" {
 }
-provider "kubernetes" {
-}
+# provider "kubernetes" {
+# }
 
 # EFS nfs-provisioner
 resource "helm_release" "nfs-subdir-external-provisioner" {

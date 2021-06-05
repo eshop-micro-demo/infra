@@ -1,6 +1,7 @@
 global:
   storageClass: efs-client
 auth:
+  # This is BAD to checking in password in plain text. OK for demo purposes.
   rootPassword: "checkout"
   database: checkout
 rbac:
@@ -10,3 +11,4 @@ metrics:
 primary:
   persistence:
     size: 250M
+fullnameOverride: checkout-db
