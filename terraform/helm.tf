@@ -15,6 +15,8 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
   namespace  = "storage"
   create_namespace = true
   atomic = true
+  # extra time for EFS DNS names to become available
+  timeout = 600
 
   set {
     name  = "nfs.server"
