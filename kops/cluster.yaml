@@ -21,7 +21,7 @@ spec:
     rbac: {}
   channel: stable
   cloudProvider: aws
-  configBase: s3://vj-1111-vj-kops/kopsdemo.k8s.local
+  #configBase: s3://vj-1111-vj-kops/kopsdemo.k8s.local
   containerRuntime: docker
   etcdClusters:
   - cpuRequest: 200m
