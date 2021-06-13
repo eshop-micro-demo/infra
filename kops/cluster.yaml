@@ -51,7 +51,7 @@ spec:
       enabled: true
       memoryRequest: 5Mi
       cpuRequest: 25m
-    kubelet:
+  kubelet:
     anonymousAuth: false
   kubernetesApiAccess:
   - 0.0.0.0/0
