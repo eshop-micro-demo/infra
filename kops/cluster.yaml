@@ -23,6 +23,7 @@ spec:
   cloudProvider: aws
   clusterAutoscaler:
     enabled: true
+    scaleDownUnneededTime: 4m
   #setting env variable KOPS_STATE_STORE seems to work; therefore, commenting configBase
   #configBase: s3://vj-1111-vj-kops/kopsdemo.k8s.local
   containerRuntime: docker
