@@ -1,0 +1,13 @@
+nfs:
+  path:"/"
+
+storageClass:
+  name:"efs-client"
+
+resources:
+  limits:
+    cpu: 20m
+    memory: 50Mi
+  requests:
+    cpu: 5m
+    memory: 50Mi

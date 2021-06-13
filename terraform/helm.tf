@@ -22,16 +22,9 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
     name  = "nfs.server"
     value = aws_efs_file_system.efs-volume.dns_name
   }
-
-  set {
-    name  = "nfs.path"
-    value = "/"
-  }
-
-  set {
-    name  = "storageClass.name"
-    value = "efs-client"
-  }
+  values = [
+    "${file("helm/values.nfs-provisioner.yaml")}"
+  ]
 }
 
 # nginx-ingress-controller
@@ -43,6 +36,10 @@ resource "helm_release" "ingress-nginx" {
   namespace  = "ingress-nginx"
   create_namespace = true
   atomic = true
+  values = [
+    "${file("helm/values.nginx-ingress.yaml")}"
+  ]
+
 }
 
 # kube2iam
@@ -70,6 +67,9 @@ resource "helm_release" "cert-manager" {
   namespace  = "cert-manager"
   create_namespace = true
   atomic = true
+  values = [
+    "${file("helm/values.cert-manager.yaml")}"
+  ]
 }
 
 # External-DNS
