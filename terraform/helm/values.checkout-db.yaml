@@ -11,4 +11,11 @@ metrics:
 primary:
   persistence:
     size: 250M
+  resources:
+    limits:
+      memory: 256Mi
+      cpu: 100m
+    requests:
+      memory: 256Mi
+      cpu: 100m
 fullnameOverride: checkout-db
