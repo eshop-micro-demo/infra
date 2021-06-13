@@ -71,6 +71,14 @@ spec:
     name: ap-south-1a
     type: Public
     zone: ap-south-1a
+  - cidr: 172.20.64.0/19
+    name: ap-south-1b
+    type: Public
+    zone: ap-south-1b
+  - cidr: 172.20.96.0/19
+    name: ap-south-1c
+    type: Public
+    zone: ap-south-1c
   topology:
     dns:
       type: Public
@@ -110,8 +118,8 @@ metadata:
 spec:
   image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20210119.1
   machineType: t3a.small
-  maxSize: 1
-  minSize: 3
+  maxSize: 3
+  minSize: 1
   maxPrice: "0.0040"
   volumeSize: 30
   nodeLabels:
@@ -119,3 +127,5 @@ spec:
   role: Node
   subnets:
   - ap-south-1a
+  - ap-south-1b
+  - ap-south-1c
