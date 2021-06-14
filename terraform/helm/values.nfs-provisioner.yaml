@@ -1,8 +1,8 @@
 nfs:
-  path:"/"
+  path: "/"
 
 storageClass:
-  name:"efs-client"
+  name: "efs-client"
 
 resources:
   limits:
