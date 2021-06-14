@@ -5,3 +5,15 @@ resources:
   requests:
     cpu: 10m
     memory: 30Mi
+
+webhook:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 30Mi
+
+caninjector:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 30Mi
