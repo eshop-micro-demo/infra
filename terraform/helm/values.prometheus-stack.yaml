@@ -1,0 +1,25 @@
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+    - grafana.dh4r4pvj.ga
+    tls:
+    - secretName: grafana-general-tls
+      hosts:
+      - grafana.dh4r4pvj.ga
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+prometheus:
+  ingress:
+    enabled: true
+    hosts:
+    - prometheus.dh4r4pvj.ga
+    tls:
+    - secretName: prometheus-general-tls
+      hosts:
+      - prometheus.dh4r4pvj.ga
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    paths:
+    - /
+    pathType: ImplementationSpecific

@@ -90,3 +90,18 @@ resource "helm_release" "external-dns" {
     value = aws_iam_role.external-dns-role.arn
   }
 }
+
+# Kube-Prometheus-stack
+resource "helm_release" "prometheus-stack" {
+  name       = "kube-prometheus-stack"
+  chart      = "kube-prometheus-stack"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  version    = "16.7.0"
+  namespace  = "monitoring"
+  create_namespace = true
+  atomic = true
+
+  values = [
+    "${file("helm/values.prometheus-stack.yaml")}"
+  ]
+}
