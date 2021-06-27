@@ -16,3 +16,21 @@ resource "helm_release" "checkout-db" {
   ]
 }
 
+# Postgres DB - Store microservice
+resource "helm_release" "store-db" {
+  depends_on = [
+    helm_release.nfs-subdir-external-provisioner
+  ]
+  name       = "store-db"
+  chart      = "postgresql"
+  repository = "https://charts.bitnami.com/bitnami"
+  version    = "10.5.0"
+  namespace  = "microshop"
+  create_namespace = true
+  atomic = true
+
+  values = [
+    "${file("helm/values.store-db.yaml")}"
+  ]
+}
+

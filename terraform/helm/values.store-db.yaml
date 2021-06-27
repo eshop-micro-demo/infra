@@ -1,0 +1,17 @@
+global:
+  storageClass: efs-client
+postgresqlDatabase: store
+rbac:
+  create: true
+metrics:
+  enabled: true
+persistence:
+  size: 250M
+resources:
+  limits:
+    memory: 512Mi
+    cpu: 500m
+  requests:
+    memory: 256Mi
+    cpu: 250m
+fullnameOverride: store-db
