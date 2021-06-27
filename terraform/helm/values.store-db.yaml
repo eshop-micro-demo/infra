@@ -15,4 +15,6 @@ resources:
     memory: 256Mi
     cpu: 250m
 fullnameOverride: store-db
-postgresqlPassword: "storedb"
+  # This is BAD to checking in password in plain text. OK for demo purposes.
+postgresqlPassword: storedb
+postgresqlDatabase: store
