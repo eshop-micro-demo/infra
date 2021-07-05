@@ -105,3 +105,16 @@ resource "helm_release" "prometheus-stack" {
     "${file("helm/values.prometheus-stack.yaml")}"
   ]
 }
+
+# Staketer-reloader
+resource "helm_release" "stakater" {
+  name       = "stakater"
+  chart      = "reloader"
+  repository = "https://stakater.github.io/stakater-charts"
+  version    = "v0.0.95"
+  atomic = true
+  set {
+    name  = "reloader.podMonitor.enabled"
+    value = "true"
+  }
+}
