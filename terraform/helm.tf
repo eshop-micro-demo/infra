@@ -106,6 +106,28 @@ resource "helm_release" "prometheus-stack" {
   ]
 }
 
+# Loki
+resource "helm_release" "Loki" {
+  name       = "loki"
+  chart      = "loki"
+  repository = "https://grafana.github.io/helm-charts"
+  version    = "2.5.2"
+  namespace  = "monitoring"
+  create_namespace = true
+  atomic = true
+}
+
+# promtail
+resource "helm_release" "promtail" {
+  name       = "promtail"
+  chart      = "promtail"
+  repository = "https://grafana.github.io/helm-charts"
+  version    = "3.6.0"
+  namespace  = "monitoring"
+  create_namespace = true
+  atomic = true
+}
+
 # Staketer-reloader
 resource "helm_release" "stakater" {
   name       = "stakater"
