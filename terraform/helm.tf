@@ -129,6 +129,10 @@ resource "helm_release" "promtail" {
   namespace  = "monitoring"
   create_namespace = true
   atomic = true
+  set {
+    name  = "config.lokiAddress"
+    value = "http://loki:3100/loki/api/v1/push"
+  }
 }
 
 # Staketer-reloader
