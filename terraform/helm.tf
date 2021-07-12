@@ -147,3 +147,12 @@ resource "helm_release" "stakater" {
     value = "true"
   }
 }
+
+# Kafka
+resource "helm_release" "kafka" {
+  name       = "kafka"
+  chart      = "kafka"
+  repository = "https://charts.bitnami.com/bitnami"
+  version    = "13.0.2"
+  atomic = true
+}
