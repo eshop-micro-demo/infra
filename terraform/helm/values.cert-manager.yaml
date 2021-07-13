@@ -17,3 +17,7 @@ caninjector:
     requests:
       cpu: 10m
       memory: 30Mi
+
+prometheus:
+  servicemonitor:
+    enabled: true

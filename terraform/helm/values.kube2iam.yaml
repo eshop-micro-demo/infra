@@ -19,3 +19,9 @@ resources:
   requests:
     cpu: 4m
     memory: 16Mi
+
+prometheus:
+  service:
+    enabled: true
+  serviceMonitor:
+    enabled: true
