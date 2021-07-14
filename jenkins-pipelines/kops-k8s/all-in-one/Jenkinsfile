@@ -95,9 +95,9 @@ pipeline {
                     #which kops
                     
                     kops export kubecfg ${params.CLUSTER_NAME} --kubeconfig ./kops_kubeconfig --admin
-                                       
-                    KUBECONFIG=./kops_kubeconfig kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.4.0-beta.0/cert-manager.crds.yaml
                     
+                    KUBECONFIG=./kops_kubeconfig kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.4.0-beta.0/cert-manager.crds.yaml
+                    KUBECONFIG=./kops_kubeconfig kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/tree/master/example/prometheus-operator-crd
                     export KUBE_CONFIG_PATH=../kops_kubeconfig
                     cd terraform
                     terraform init
