@@ -27,8 +27,23 @@ resource "helm_release" "nfs-subdir-external-provisioner" {
   ]
 }
 
+
+# prometheus-operator-crds
+resource "helm_release" "prometheus-crds" {
+  name       = "prometheus-operator-crds"
+  chart      = "prometheus-operator-crds"
+  repository = "https://charts.appscode.com/stable/"
+  version    = "0.45.0"
+  namespace  = "monitoring"
+  create_namespace = true
+  atomic = true
+}
+
 # nginx-ingress-controller
 resource "helm_release" "ingress-nginx" {
+  depends_on = [
+    helm_release.prometheus-crds
+  ]
   name       = "ingress-nginx"
   chart      = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
@@ -44,6 +59,9 @@ resource "helm_release" "ingress-nginx" {
 
 # kube2iam
 resource "helm_release" "kube2iam" {
+  depends_on = [
+    helm_release.prometheus-crds
+  ]
   name       = "kube2iam"
   chart      = "kube2iam"
   repository = "https://jtblin.github.io/kube2iam/"
@@ -60,6 +78,9 @@ resource "helm_release" "kube2iam" {
 
 # Cert-manager
 resource "helm_release" "cert-manager" {
+  depends_on = [
+    helm_release.prometheus-crds
+  ]
   name       = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io/"
@@ -74,6 +95,9 @@ resource "helm_release" "cert-manager" {
 
 # External-DNS
 resource "helm_release" "external-dns" {
+  depends_on = [
+    helm_release.prometheus-crds
+  ]
   name       = "external-dns"
   chart      = "external-dns"
   repository = "https://charts.bitnami.com/bitnami"
