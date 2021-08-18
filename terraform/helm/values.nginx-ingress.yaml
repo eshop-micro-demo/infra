@@ -13,6 +13,8 @@ controller:
       # prometheus.io/port: "10254"
     serviceMonitor:
       enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack
     prometheusRule:
       enabled: true
       rules:

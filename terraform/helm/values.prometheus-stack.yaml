@@ -9,6 +9,13 @@ grafana:
       - grafana.dh4r4pvj.ga
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
+  additionalDataSources:
+  - name: Loki
+    type: loki
+    url: http://loki:3100
+    access: proxy
+    orgId: 1
+    version: 1
 prometheus:
   ingress:
     enabled: true

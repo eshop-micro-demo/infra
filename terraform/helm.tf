@@ -161,6 +161,9 @@ resource "helm_release" "promtail" {
 
 # Staketer-reloader
 resource "helm_release" "stakater" {
+  depends_on = [
+    helm_release.prometheus-crds
+  ]
   name       = "stakater"
   chart      = "reloader"
   repository = "https://stakater.github.io/stakater-charts"
