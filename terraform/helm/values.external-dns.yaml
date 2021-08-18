@@ -27,3 +27,5 @@ metrics:
   enabled: true
   serviceMonitor:
     enabled: true
+    selector:
+      release: kube-prometheus-stack

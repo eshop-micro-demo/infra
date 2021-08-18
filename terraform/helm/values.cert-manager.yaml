@@ -21,3 +21,5 @@ caninjector:
 prometheus:
   servicemonitor:
     enabled: true
+    labels:
+      release: kube-prometheus-stack
