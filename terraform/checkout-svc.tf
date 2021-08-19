@@ -1,7 +1,8 @@
 # Maria-DB- Checkout microservice
 resource "helm_release" "checkout-db" {
   depends_on = [
-    helm_release.nfs-subdir-external-provisioner
+    helm_release.nfs-subdir-external-provisioner,
+    helm_release.prometheus-crds
   ]
   name       = "checkout-db"
   chart      = "mariadb"
@@ -19,7 +20,8 @@ resource "helm_release" "checkout-db" {
 # Postgres DB - Store microservice
 resource "helm_release" "store-db" {
   depends_on = [
-    helm_release.nfs-subdir-external-provisioner
+    helm_release.nfs-subdir-external-provisioner,
+    helm_release.prometheus-crds
   ]
   name       = "store-db"
   chart      = "postgresql"

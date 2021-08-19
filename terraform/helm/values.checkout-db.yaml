@@ -8,6 +8,10 @@ rbac:
   create: true
 metrics:
   enabled: true
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      release: kube-prometheus-stack
 primary:
   persistence:
     size: 250M
